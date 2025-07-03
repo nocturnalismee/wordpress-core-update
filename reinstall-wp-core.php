@@ -129,11 +129,25 @@ function download_latest_wp($dest) {
     $ch = curl_init($latest_url);
     curl_setopt($ch, CURLOPT_FILE, $file);
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-    curl_setopt($ch, CURLOPT_TIMEOUT, 300);
-    curl_exec($ch);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 600); // 10 menit
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
+    curl_setopt($ch, CURLOPT_BUFFERSIZE, 1024*1024);
+    $result = curl_exec($ch);
+    $err = curl_error($ch);
+    $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     curl_close($ch);
     fclose($file);
-    return file_exists($dest);
+    if (!$result || $http_code !== 200) {
+        if (file_exists($dest)) unlink($dest);
+        echo "<div class='error'>Gagal download file WordPress. HTTP code: $http_code. Error: $err</div>";
+        return false;
+    }
+    if (!file_exists($dest) || filesize($dest) < 10000000) {
+        echo "<div class='error'>File WordPress gagal diunduh atau file terlalu kecil.</div>";
+        if (file_exists($dest)) unlink($dest);
+        return false;
+    }
+    return true;
 }
 
 function rrmdir($dir) {
