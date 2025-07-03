@@ -395,7 +395,6 @@ $latest_version = get_latest_wp_version();
         $tmp_zip = __DIR__ . '/latest.zip';
         $tmp_dir = __DIR__ . '/wordpress-core';
         if (is_dir($tmp_dir)) rrmdir($tmp_dir);
-        echo $lang['download_failed'] . "\n";
         if (!download_latest_wp($tmp_zip)) {
             echo "<span class='error'>" . $lang['download_failed'] . "</span></div>";
         } else {
