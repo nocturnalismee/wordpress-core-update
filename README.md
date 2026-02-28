@@ -1,4 +1,4 @@
-# 🚀 Modern WordPress Core Updater & Reinstaller
+# Modern WordPress Core Updater & Reinstaller
 
 A robust, standalone PHP script designed to safely update or reinstall WordPress core files directly from your server. Featuring a modern, responsive UI and advanced safety mechanisms, this tool is perfect for fixing corrupted WordPress installations, resolving malware infections, or forcing an update without relying on the WordPress dashboard.
 
